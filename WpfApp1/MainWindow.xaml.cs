@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace WpfApp1
@@ -15,7 +14,7 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private async Task AddCustomer_Click(object sender, RoutedEventArgs e)
+        private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
             Customer customer = new();
             customer.CustomerId = 100;
