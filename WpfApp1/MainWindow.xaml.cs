@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace WpfApp1
 {
@@ -12,7 +15,7 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void AddCustomer_Click(object sender, RoutedEventArgs e)
+        private async Task AddCustomer_Click(object sender, RoutedEventArgs e)
         {
             Customer customer = new();
             customer.CustomerId = 100;
@@ -20,9 +23,27 @@ namespace WpfApp1
         }
     }
 
-    public class Customer
+    public class Customer : INotifyPropertyChanged
     {
-        public int CustomerId { get; set; } 
 
+        private int _customerId;
+
+        public int CustomerId
+        {
+            get { return _customerId; }
+            set
+            {
+                _customerId = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
