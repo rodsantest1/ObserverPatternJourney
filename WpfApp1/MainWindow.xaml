@@ -20,6 +20,6 @@
                  Grid.Column="1"
                  Grid.Row="1"
                  Margin="2"          
-                 Text="{Binding CustomerId, Mode=OneWay}"/>
+                 Text="{Binding CustomerId}"/>
     </Grid>
 </Window>
