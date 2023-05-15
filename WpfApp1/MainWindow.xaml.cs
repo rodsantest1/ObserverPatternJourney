@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace WpfApp1
 {
@@ -7,22 +9,40 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Customer _customer = new Customer();
+        public Customer Customer => _customer;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = _customer;
         }
 
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
-            Customer customer = new();
-            customer.CustomerId = 100;
-            MessageBox.Show($"Customer {customer.CustomerId} added!");
+            _customer.CustomerId += 100;
+            MessageBox.Show($"Customer {_customer.CustomerId} added!");
         }
     }
 
-    public class Customer
+    public class Customer : INotifyPropertyChanged
     {
-        public int CustomerId { get; set; } 
+        private int _customerId;
+        public int CustomerId
+        {
+            get => _customerId;
+            set
+            {
+                _customerId = value;
+                OnPropertyChanged();
+            }
+        }
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
 }
